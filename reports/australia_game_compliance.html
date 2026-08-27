@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>호주 모바일 게임 퍼블리싱 규제 준수 가이드</title>
+
+  <meta property="og:title" content="호주 모바일 게임 퍼블리싱 규제 준수 가이드" />
+  <meta property="og:description" content="호주 모바일 게임 서비스 시 필수 준수 4대 규제 — 게임등급(M15+)·소비자보호법(ACL)·개인정보보호법·온라인세이프티 실무 가이드" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ko_KR" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" />
+
+  <style>
+    :root{
+      --primary:18 100% 57%; --primary-strong:17 87% 43%; --primary-soft:23 100% 94%; --primary-foreground:0 0% 100%;
+      --background:240 14% 98%; --surface:0 0% 100%; --surface-muted:240 12% 96%;
+      --text:240 10% 11%; --text-muted:240 5% 38%; --text-subtle:240 4% 56%;
+      --border:240 9% 92%; --border-strong:240 8% 80%;
+      --success:142 71% 36%; --warning:38 92% 50%; --danger:356 77% 50%; --info:217 91% 53%;
+      --up:217 91% 53%; --down:356 77% 50%;
+      --radius-sm:8px; --radius:14px; --radius-lg:18px;
+      --shadow-sm:0 1px 2px rgba(16,24,40,.04);
+      --shadow:0 1px 2px rgba(16,24,40,.04), 0 4px 10px rgba(16,24,40,.05);
+      --shadow-lg:0 4px 6px rgba(16,24,40,.04), 0 14px 28px rgba(16,24,40,.10);
+      font-size:62.5%;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+      font-size:1.6rem; line-height:1.7; font-feature-settings:'tnum';
+      word-break:keep-all; overflow-wrap:break-word;
+      color:hsl(var(--text)); background:hsl(var(--background));
+      -webkit-font-smoothing:antialiased;
+    }
+    .material-icons-outlined{ line-height:1; vertical-align:middle; user-select:none; }
+    .wrap{ max-width:1280px; margin:0 auto; padding:56px 48px 96px; }
+    .doc{ max-width:960px; margin:0 auto; }
+    section{ margin:24px 0; }
+
+    .cover{ margin-bottom:8px; }
+    .kicker{ font-size:1.6rem; letter-spacing:.14em; text-transform:uppercase; color:hsl(var(--primary)); font-weight:700; }
+    .cover h1{ font-size:3.4rem; line-height:1.22; letter-spacing:-.02em; margin:10px 0 12px; font-weight:700; text-wrap:balance; }
+    .cover .lead{ font-size:1.8rem; color:hsl(var(--text-muted)); line-height:1.7; max-width:none; margin:0; text-wrap:pretty; }
+    .cover-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:10px 28px; margin-top:22px; font-size:1.6rem; color:hsl(var(--text-muted)); }
+    .cover-meta strong{ color:hsl(var(--text)); font-weight:600; margin-right:6px; }
+
+    .card{
+      background:hsl(var(--surface)); border:1px solid hsl(var(--border));
+      border-radius:var(--radius); box-shadow:var(--shadow); padding:28px 32px;
+      transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;
+    }
+    .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+    .card.feature{ box-shadow:var(--shadow-lg); }
+
+    h2{ font-size:2.2rem; font-weight:700; letter-spacing:-.01em; margin:0 0 16px; display:flex; align-items:center; gap:10px; }
+    h2 .seq{ color:hsl(var(--primary)); font-size:1.8rem; font-weight:700; font-feature-settings:'tnum'; }
+    h3{ font-size:1.7rem; font-weight:700; margin:0 0 6px; }
+    p{ margin:10px 0; }
+    p:first-child{ margin-top:0; }
+    .muted{ color:hsl(var(--text-muted)); }
+    strong{ color:hsl(var(--text)); font-weight:700; }
+    a{ color:hsl(var(--primary-strong)); font-weight:600; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .lead-body{ font-size:1.7rem; font-weight:500; line-height:1.6; }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:4px;
+      padding:4px 12px; font-size:1.6rem; font-weight:600;
+      border-radius:999px; line-height:1.5; white-space:nowrap;
+    }
+    .badge-success{ background:hsl(var(--success)/.14); color:hsl(142 71% 26%); }
+    .badge-info{ background:hsl(var(--info)/.12); color:hsl(217 91% 38%); }
+    .badge-warning{ background:hsl(var(--warning)/.16); color:hsl(38 92% 32%); }
+    .badge-danger{ background:hsl(var(--danger)/.13); color:hsl(356 77% 38%); }
+    .badge-muted{ background:hsl(var(--surface-muted)); color:hsl(var(--text-muted)); }
+    .badge-brand{ background:hsl(var(--primary-soft)); color:hsl(var(--primary-strong)); }
+
+    .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .kpi{
+      background:hsl(var(--surface)); border:1px solid hsl(var(--border));
+      border-radius:var(--radius); box-shadow:var(--shadow); padding:22px 22px 20px;
+      transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;
+    }
+    .kpi:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+    .kpi-label{ font-size:1.7rem; font-weight:700; color:hsl(var(--text)); margin-bottom:10px; letter-spacing:-.005em; }
+    .kpi-desc{ font-size:1.6rem; color:hsl(var(--text-muted)); margin-bottom:14px; }
+    .kpi-foot{ margin-top:8px; font-size:1.6rem; display:flex; align-items:center; justify-content:flex-start; gap:8px; }
+
+    table{ width:100%; border-collapse:collapse; font-size:1.6rem; }
+    thead th{
+      text-align:left; padding:12px 14px; font-size:1.6rem; font-weight:700;
+      color:hsl(var(--text-muted)); background:hsl(var(--surface-muted));
+      border-bottom:1px solid hsl(var(--border)); letter-spacing:.02em;
+    }
+    thead th.num{ text-align:right; }
+    tbody td{ padding:13px 14px; border-bottom:1px solid hsl(var(--border)); vertical-align:middle; }
+    tbody tr:last-child td{ border-bottom:none; }
+    tbody tr:hover{ background:hsl(var(--surface-muted)); }
+    .num{ text-align:right; font-feature-settings:'tnum'; }
+    .table-card{ padding:8px 8px 0; overflow:hidden; }
+    .table-card h2{ padding:20px 24px 0; }
+    .table-card .table-note{ padding:14px 24px 18px; }
+    .table-wrap{ overflow-x:auto; }
+    /* word-break:keep-all 적용 시 그리드/플렉스 자식이 최소콘텐츠 폭으로 밀려 가로 넘침이 생기는 것 방지 */
+    .card, .kpi, .reg-card > *, .reg-sub, .callout > *, .tl-item > *, .ux-mock-item, .steps li,
+    .table-wrap, .cover-meta > span, .links-list, .links-list li, ul, ol, li, p{ min-width:0; }
+
+    .callouts{ display:grid; gap:12px; }
+    .callout{
+      display:grid; grid-template-columns:36px 1fr; gap:14px;
+      padding:16px 20px; border-radius:var(--radius); border:1px solid;
+    }
+    .callout-icon{ width:36px; height:36px; border-radius:999px; display:grid; place-items:center; color:hsl(var(--primary-foreground)); }
+    .callout-icon .material-icons-outlined{ font-size:2rem; }
+    .callout h3{ margin:5px 0 5px; font-size:1.6rem; }
+    .callout p{ margin:0; font-size:1.6rem; line-height:1.6; }
+    .callout.success{ background:hsl(142 60% 96%); border-color:hsl(var(--success)/.30); }
+    .callout.success .callout-icon{ background:hsl(var(--success)); }
+    .callout.warning{ background:hsl(38 92% 96%); border-color:hsl(var(--warning)/.35); }
+    .callout.warning .callout-icon{ background:hsl(var(--warning)); }
+    .callout.danger{ background:hsl(356 77% 97%); border-color:hsl(var(--danger)/.30); }
+    .callout.danger .callout-icon{ background:hsl(var(--danger)); }
+    .callout.info{ background:hsl(217 91% 97%); border-color:hsl(var(--info)/.25); }
+    .callout.info .callout-icon{ background:hsl(var(--info)); }
+
+    .steps{ list-style:none; counter-reset:step; padding:0; margin:0; display:grid; gap:12px; }
+    .steps li{ position:relative; padding:4px 4px 4px 56px; }
+    .steps li::before{
+      content:counter(step); counter-increment:step;
+      position:absolute; left:0; top:0; width:34px; height:34px; border-radius:999px;
+      background:hsl(var(--primary-soft)); color:hsl(var(--primary-strong));
+      font-size:1.6rem; font-weight:700; display:grid; place-items:center; font-feature-settings:'tnum';
+    }
+    .step-title{ font-weight:700; font-size:1.6rem; margin:0 0 4px; }
+    .step-meta{ font-size:1.6rem; color:hsl(var(--text-muted)); }
+
+    .timeline{ display:grid; gap:0; }
+    .tl-item{ display:grid; grid-template-columns:96px 1fr; gap:18px; padding:14px 0; border-bottom:1px solid hsl(var(--border)); }
+    .tl-item:last-child{ border-bottom:none; }
+    .tl-day{ font-weight:700; color:hsl(var(--primary-strong)); font-feature-settings:'tnum'; }
+    .tl-title{ font-weight:700; margin:0 0 4px; }
+    .tl-desc{ color:hsl(var(--text-muted)); margin:0; }
+
+    .reg-card{ display:grid; gap:18px; }
+    .reg-head{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .reg-num{ width:40px; height:40px; border-radius:999px; background:hsl(var(--primary-soft)); color:hsl(var(--primary-strong)); display:grid; place-items:center; font-weight:700; font-size:1.8rem; flex-shrink:0; }
+    .reg-sub{ background:hsl(var(--surface-muted)); border-radius:var(--radius-sm); padding:18px 20px; }
+    .reg-sub h4{ font-size:1.6rem; font-weight:700; margin:0 0 8px; display:flex; align-items:center; gap:8px; }
+    .links-list{ display:grid; gap:6px; padding-left:20px; margin:0; }
+    .links-list li{ font-size:1.6rem; }
+
+    footer{
+      margin-top:40px; padding-top:24px; border-top:1px solid hsl(var(--border));
+      display:grid; grid-template-columns:repeat(2,1fr); gap:8px 32px; font-size:1.6rem;
+    }
+    .foot-row{ display:flex; gap:12px; }
+    .foot-key{ color:hsl(var(--text-muted)); min-width:84px; font-weight:600; }
+    .footnote{ font-size:1.6rem; color:hsl(var(--text-muted)); line-height:1.6; }
+
+    .reveal{ opacity:0; transform:translateY(16px); }
+    .reveal.in{ opacity:1; transform:none; transition:opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1); }
+
+    @media (max-width:880px){
+      .kpi-grid{ grid-template-columns:repeat(2,1fr); }
+      .tl-item{ grid-template-columns:72px 1fr; }
+    }
+    @media (max-width:600px){
+      .wrap{ padding:36px 18px 64px; }
+      .cover h1{ font-size:2.8rem; }
+      .kpi-grid{ grid-template-columns:1fr; }
+      footer{ grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion:reduce){
+      .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+      .card, .kpi{ transition:none !important; }
+      .card:hover, .kpi:hover{ transform:none !important; }
+    }
+    @media print{
+      body{ background:#fff; color:#000; }
+      .card, .kpi, .table-card{ box-shadow:none !important; border-color:#ddd; break-inside:avoid; }
+      .card:hover, .kpi:hover{ transform:none !important; box-shadow:none !important; }
+      .reveal{ opacity:1 !important; transform:none !important; }
+      section{ break-inside:avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap"><div class="doc">
+
+    <header class="cover reveal">
+      <div class="kicker">게임 정책 · 글로벌 퍼블리싱 가이드</div>
+      <h1>호주 모바일 게임 퍼블리싱 규제 준수 가이드</h1>
+      <p class="lead">호주는 <strong>유료 가챠 포함 게임에 법정 최소 등급(M 15+)을 강제</strong>하고, 소비자보호법(ACL)이 앱스토어 결제와 무관하게 게임사에 <strong>직접 환불 책임</strong>을 지우는 시장입니다. 호주 대상 모바일 게임 서비스 출시 전 점검해야 할 4가지 필수 규제와 단계별 준수 방법을 정리했습니다.</p>
+      <div class="cover-meta">
+        <span><strong>대상 국가</strong>호주 (AU)</span>
+        <span><strong>대상 플랫폼</strong>모바일 게임</span>
+        <span><strong>기준일</strong>2026-08-27</span>
+        <span><span class="badge badge-brand">실무자용 요약본</span></span>
+      </div>
+    </header>
+
+    <!-- 01 한눈에 보기 -->
+    <section class="reveal">
+      <h2 style="padding-left:4px"><span class="seq">01</span> 한눈에 보기</h2>
+      <div class="card feature">
+        <h3 style="margin:0 0 14px">결론부터</h3>
+        <p class="lead-body">
+          호주는 등급분류·소비자보호·개인정보보호·온라인세이프티 4개 법이 <strong>모두 강한 집행력</strong>을 가진 시장입니다.
+          특히 ACCC(호주경쟁소비자위원회)는 게임·앱 업계를 상대로 <strong>"환불 거부·확률 미공시·다크패턴 구독"</strong>을
+          집중 단속 중이며, 실제로 Valve(Steam)에 A$300만 벌금을 부과한 판례가 있습니다. 2026년 3월에는
+          <strong>Age-Restricted Material Codes</strong> 시행으로 R18+ 게임의 연령확인 의무까지 새로 생겼습니다.
+        </p>
+        <p class="lead-body">
+          2026년에 새로 확인해야 할 것이 하나 더 있습니다. eSafety는 "게임은 16세 미만 SNS 금지법 대상이 아니다"라는 기준을
+          유지하면서도, <strong>별개 트랙인 투명성명령(transparency notice)으로 Roblox·Minecraft·Fortnite·Steam 등
+          게임 플랫폼을 직접 조사</strong>하고 있습니다. 준수 입증 기한은 2026년 12월입니다.
+        </p>
+        <p class="lead-body">
+          아래 4가지 항목만 지키면 출시 리스크의 대부분이 해소됩니다.
+        </p>
+        <p class="lead-body">
+          더 상세한 국가별 비교는 <a href="#restricted" target="_blank" rel="noopener" style="font-weight:700; color:hsl(var(--info));">호주 규제 상세 (내부 Wiki)</a>를 참고하세요.
+        </p>
+      </div>
+      <div class="kpi-grid" style="margin-top:16px">
+        <div class="kpi">
+          <div class="kpi-label">게임 등급분류</div>
+          <div class="kpi-desc">유료 가챠 포함 시 최소 M(15+) 강제, IARC 설문으로 충족 (아이템 환금성이 생기면 IGA 2001 별도 검토)</div>
+          <div class="kpi-foot"><span class="badge badge-danger">필수 · High</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">소비자보호법(ACL)</div>
+          <div class="kpi-desc">"환불 불가" 문구 금지, 게임사 직접 환불·보증 책임</div>
+          <div class="kpi-foot"><span class="badge badge-danger">필수 · High</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">개인정보보호법</div>
+          <div class="kpi-desc">Privacy Act 2024 개정 — 최대 A$5,000만 과징금</div>
+          <div class="kpi-foot"><span class="badge badge-danger">필수 · High</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">온라인 세이프티(연령확인 코드)</div>
+          <div class="kpi-desc">CSAM 신고·삭제 24시간 대응 + 2026-03-09 시행 Age-Restricted Material Codes로 앱스토어 R18+ 차단·게임 연령확인 의무</div>
+          <div class="kpi-foot"><span class="badge badge-danger">필수 · High</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 왜 호주가 특별한가 -->
+    <section class="reveal">
+      <h2 style="padding-left:4px"><span class="seq">02</span> 왜 호주가 특별한가</h2>
+      <div class="card">
+        <p>
+          다른 영미권 국가(미국·캐나다)는 확률형 아이템·환불에 대해 업계 자율규제 수준이지만,
+          호주는 <strong>등급분류법·소비자법·개인정보법이 각각 별도 정부기관(Classification Board·ACCC·OAIC)에 의해
+          실제로 집행</strong>되는 나라입니다. 특히 ACL(호주소비자법)은 앱스토어가 결제를 대행하더라도
+          게임을 실제로 공급하는 게임사의 책임은 소멸하지 않는다고 못박고 있어, "결제는 앱스토어가 처리하니 우리 책임이 아니다"라는
+          논리가 통하지 않습니다.
+        </p>
+        <p class="muted">
+          반대로 좋은 소식도 있습니다 — 2025년 12월 10일 시행된 "16세 미만 소셜미디어 금지법"은 eSafety가
+          <strong>일반적인 모바일 게임은 명시적으로 적용 대상에서 배제</strong>한다고 공식 안내하고 있어,
+          게임 내 소셜 기능이 과도하게 커지지 않는 한 별도 연령인증 시스템을 급하게 구축할 필요는 없습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 03 규제별 상세 -->
+    <section class="reveal">
+      <h2 style="padding-left:4px"><span class="seq">03</span> 규제별 쉬운 설명 + 준수 방법</h2>
+
+      <div class="card reg-card" style="margin-bottom:18px">
+        <div class="reg-head">
+          <div class="reg-num">1</div>
+          <h3 style="margin:0">게임 등급분류 (Classification Board)</h3>
+          <span class="badge badge-danger">High</span>
+        </div>
+        <p>한국의 게임물관리위원회처럼, 호주는 <strong>G/PG/M/MA15+/R18+</strong> 5단계 법정 등급이 있습니다. 유료 가챠(확률형 아이템)가 포함된 게임은 2024년 9월부터 <strong>최소 M(15+) 등급이 의무</strong>이며, 도박 시뮬레이션 콘텐츠(소셜카지노·슬롯 모사 등)가 있으면 R18+까지 올라갑니다.</p>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">checklist</span>준수 체크리스트</h4>
+          <ol class="steps">
+            <li><div class="step-title">IARC(국제연령등급연합) 설문에 확률형 아이템 여부를 정확히 답변</div><div class="step-meta">호주는 IARC 참여국 — Google Play/Apple 입점 시 IARC 설문만 정확히 답하면 Classification Board에 별도 신청 불필요</div></li>
+            <li><div class="step-title">유료 가챠 있으면 G·PG 등급 선택 자체가 불가</div><div class="step-meta">설문에서 "현금으로 구매하는 확률형 콘텐츠 있음"으로 답하면 자동으로 최소 M(15+) 이상 산정됨</div></li>
+            <li><div class="step-title">도박 시뮬레이션 콘텐츠는 R18+ 여부 별도 확인</div><div class="step-meta">소셜카지노형 슬롯·룰렛 등 실제 도박을 모사한 미니게임이 있으면 R18+ 대상인지 법무 검토</div></li>
+            <li><div class="step-title">업데이트로 유료 가챠 신규 추가 시 재분류</div><div class="step-meta">출시 당시 무료였다가 이후 패치로 유료 확률형 아이템을 추가하면 등급 재산정 필요</div></li>
+            <li><div class="step-title">IARC 설문 오답 리스크 관리</div><div class="step-meta">최근 조사에서 앱스토어 상위 게임의 20~48%가 확률형 아이템 여부를 부정확하게 답해 오분류된 사례가 확인됨 — 설문 답변 담당자를 지정하고 체크리스트로 검증</div></li>
+            <li><div class="step-title">아이템 환금성 여부 확인 (IGA 2001 · 인터랙티브도박법)</div><div class="step-meta">루트박스는 현재 IGA상 "도박"으로 명시 분류되지 않지만, <strong>현금 환전이 가능한 가상화폐·아이템 구조는 IGA 적용 가능성</strong>이 있습니다(ACMA 집행). 또한 NSW·VIC 등 각 주 도박위원회가 루트박스 도박 해당 여부를 독자 해석할 수 있으므로, 유저 간 거래·현금화 경로를 신규 도입할 때만 별도 법무 검토</div></li>
+          </ol>
+        </div>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">link</span>원문 / 레퍼런스</h4>
+          <ul class="links-list">
+            <li><a href="https://www.legislation.gov.au/C2004A04863/latest" target="_blank" rel="noopener">Classification (Publications, Films and Computer Games) Act 1995</a> <span class="muted">(출판물·영화·컴퓨터게임 등급분류법 1995)</span></li>
+            <li><a href="https://www.classification.gov.au/about-us/media-and-news/news/new-mandatory-minimum-classifications-for-gambling-games-content" target="_blank" rel="noopener">Classification Board — 확률형 콘텐츠 최소 등급 신설 공지</a></li>
+            <li><a href="https://www.classification.gov.au" target="_blank" rel="noopener">Australian Classification Board 공식 사이트</a></li>
+            <li><a href="https://www.esafety.gov.au/newsroom/media-releases/esafety-asks-gaming-giants-what-they-are-doing-to-prevent-grooming-and-radicalisation" target="_blank" rel="noopener">eSafety, 게임 대기업에 그루밍·급진화 대응 질의 (eSafety Commissioner 공식, 영문)</a></li>
+            <li><a href="https://cybernews.com/privacy/compliance-delays-australia-child-safety-details-roblox-minecraft/" target="_blank" rel="noopener">호주, Roblox·Minecraft에 아동안전 조치 소명 명령 (Cybernews, 영문)</a></li>
+            <li><a href="https://www.khan.co.kr/article/202606282047005" target="_blank" rel="noopener">호주 16세 미만 SNS 금지 과징금 배증 보도 (경향신문, 한국어)</a></li>
+            <li><a href="#restricted" target="_blank" rel="noopener">호주 규제 상세 (내부 Wiki)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reg-card" style="margin-bottom:18px">
+        <div class="reg-head">
+          <div class="reg-num">2</div>
+          <h3 style="margin:0">소비자보호법 (ACL) — ACCC 집행</h3>
+          <span class="badge badge-danger">High</span>
+        </div>
+        <p>호주소비자법(ACL)은 게임·앱이 일정 품질에 미달하면 이용자에게 <strong>환불·교체를 요구할 법적 권리</strong>를 부여합니다. 핵심은 <strong>"앱스토어가 결제를 처리했으니 우리는 책임 없다"는 논리가 통하지 않는다</strong>는 점입니다.</p>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">checklist</span>약관·CS 스크립트에 반드시 반영할 5가지</h4>
+          <ol class="steps">
+            <li><div class="step-title">"환불 불가(No Refund)" 문구 전면 삭제</div><div class="step-meta">이용약관·구매 화면 어디에도 "환불 불가"를 명시하면 그 자체로 ACL 제29조(허위 표시) 위반 — Valve(Steam)가 이 문구로 A$300만 벌금 판결을 받은 판례(ACCC v Valve) 존재</div></li>
+            <li><div class="step-title">품질 미달 시 환불·교체 요청 대응 프로세스 마련</div><div class="step-meta">"서버 문제 없음"을 이유로 환불을 일괄 거부할 수 없음 — CS 응대 스크립트에 ACL 소비자 보증 조항 반영</div></li>
+            <li><div class="step-title">확률형 아이템 확률 정확 고지</div><div class="step-meta">확률 미공시·오해 소지 있는 표시는 ACL 제18조(호도적·기만적 행위) 위반 — 스토어 상세페이지·인앱 구매 화면에 확률표 게시</div></li>
+            <li><div class="step-title">자동갱신 구독 사전 고지 + 취소 간소화</div><div class="step-meta">갱신 전 충분한 사전 고지 의무, 취소 절차를 복잡하게 만드는 다크패턴은 불공정계약조건 위반</div></li>
+            <li><div class="step-title">ACCC 소비자법 위반 사례 정기 모니터링</div><div class="step-meta">ACCC가 게임·디지털 플랫폼 업계를 집중 조사 중 — 연간 디지털 경제 우선순위 보고서 확인 권장</div></li>
+          </ol>
+        </div>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">link</span>원문 / 레퍼런스</h4>
+          <ul class="links-list">
+            <li><a href="https://www.legislation.gov.au/C2004A00109/latest" target="_blank" rel="noopener">Competition and Consumer Act 2010 (Cth) Schedule 2 — ACL</a> <span class="muted">(경쟁및소비자법 2010 부속서2 — 호주소비자법)</span></li>
+            <li><a href="https://www.accc.gov.au/media-release/valve-ordered-to-pay-3-million-in-penalties" target="_blank" rel="noopener">ACCC v Valve Corporation — A$300만 벌금 판결 보도</a></li>
+            <li><a href="https://www.accc.gov.au/business/advertising-and-promotions/misleading-or-deceptive-conduct" target="_blank" rel="noopener">ACCC — 호도적·기만적 행위 금지(ACL 제18조) 안내</a></li>
+            <li><a href="https://www.accc.gov.au/consumers/buying-products-and-services/subscriptions" target="_blank" rel="noopener">ACCC — 자동갱신 구독 소비자 안내</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reg-card" style="margin-bottom:18px">
+        <div class="reg-head">
+          <div class="reg-num">3</div>
+          <h3 style="margin:0">개인정보보호법 (Privacy Act 1988 + 2024 개정)</h3>
+          <span class="badge badge-danger">High</span>
+        </div>
+        <p>한국의 개인정보보호법과 유사하지만, 2024년 11월 개정으로 <strong>처벌 수위가 크게 강화</strong>됐습니다. 연 매출 A$300만 이상이면 대부분 적용 대상입니다.</p>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">checklist</span>준수 체크리스트</h4>
+          <ol class="steps">
+            <li><div class="step-title">APPs(호주 개인정보보호원칙) 13개 항목 준수</div><div class="step-meta">개인정보처리방침 공개(APP1)·수집 목적 제한(APP3)·목적 외 이용 금지(APP6)·보안조치(APP11)·접근권 보장(APP12) 등</div></li>
+            <li><div class="step-title">NDB(의무침해신고) — 침해 인지 후 30일 이내 OAIC 신고</div><div class="step-meta">피해 이용자에게도 신속 통보 의무, 2024년 개정으로 절차·기준 강화</div></li>
+            <li><div class="step-title">심각한 위반 시 최대 A$5,000만 과징금 리스크 인지</div><div class="step-meta">과징금 산정 기준: A$5,000만 / 위반으로 인한 수익의 3배 / 국내 매출액 30% 중 최고액</div></li>
+            <li><div class="step-title">도킹(Doxxing) 관련 UGC·커뮤니티 기능 리스크 점검</div><div class="step-meta">악의적 개인정보 공개는 2024년 개정으로 형사범죄화(최대 징역 6년) — 게임 내 채팅·프로필 공유 기능 신고 체계 마련</div></li>
+            <li><div class="step-title">만 15세 미만 이용자 개인정보 강화 보호 — 2026.12.10까지 시행 예정, 연내 선제 구현 권고</div><div class="step-meta">아동 온라인 개인정보 코드(Children's Online Privacy Code)는 "개발 예정" 단계를 지났습니다. <strong>2026.03.31 노출초안(Exposure Draft) 공개 → 2026.06.05 3차 공개의견수렴 종료 → 최종 코드 2026.12.10까지 시행 예정</strong>으로 일정이 확정된 상태이므로, UGC·소셜 기능·행동 타겟 광고 대상 여부를 연내 검토·구현할 것</div></li>
+          </ol>
+        </div>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">link</span>원문 / 레퍼런스</h4>
+          <ul class="links-list">
+            <li><a href="https://www.legislation.gov.au/C2004A03712/latest" target="_blank" rel="noopener">Privacy Act 1988 (Cth)</a> <span class="muted">(개인정보보호법 1988, 연방)</span></li>
+            <li><a href="https://www.legislation.gov.au/C2024A00121/latest" target="_blank" rel="noopener">Privacy and Other Legislation Amendment Act 2024</a> <span class="muted">(개인정보보호 및 기타 법률 개정법 2024)</span></li>
+            <li><a href="https://www.oaic.gov.au/privacy/notifiable-data-breaches" target="_blank" rel="noopener">OAIC — NDB(의무침해신고) 제도 안내</a></li>
+            <li><a href="https://www.oaic.gov.au/privacy/privacy-registers/privacy-codes/childrens-online-privacy-code" target="_blank" rel="noopener">OAIC — 아동 온라인 개인정보 코드 (개발 중)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reg-card">
+        <div class="reg-head">
+          <div class="reg-num">4</div>
+          <h3 style="margin:0">온라인 세이프티 (Online Safety Act) — eSafety Commissioner</h3>
+          <span class="badge badge-danger">High</span>
+        </div>
+        <p>UGC·채팅 기능이 있는 게임이라면 신경 써야 할 규제이며, <strong>2026년 3월 9일부터는 R18+ 콘텐츠를 다루는 게임이라면 사실상 모든 퍼블리셔가 직접 영향을 받는 규제</strong>로 확대됐습니다. 반가운 점은 <strong>"16세 미만 SNS 금지법"은 일반적인 모바일 게임에는 적용되지 않는다</strong>고 eSafety가 공식 안내하고 있다는 것입니다 — 이 SNS 금지법과 아래 Age-Restricted Material Codes는 서로 다른 별개의 규제이므로 혼동하지 마세요.</p>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">checklist</span>준수 체크리스트</h4>
+          <ol class="steps">
+            <li><div class="step-title">CSAM(아동 성착취 콘텐츠) 신고·삭제 24시간 대응 체계</div><div class="step-meta">UGC·채팅 서비스에서 CSAM 발견 시 eSafety Commissioner에 신고 의무 — 삭제 명령 수령 후 24시간 이내 이행하지 않으면 개인 최대 A$782,500 / 법인 최대 A$3,913,000 과태료</div></li>
+            <li><div class="step-title">이용자 불만처리(신고) 채널 구축</div><div class="step-meta">사이버불링·비동의 이미지 배포 등을 신고할 수 있는 내부 채널을 게임/커뮤니티 서비스 내에 마련</div></li>
+            <li><div class="step-title">"16세 미만 SNS 금지법" 해당 여부 자가 진단</div><div class="step-meta">eSafety의 공식 배제 목록(Roblox·Steam Chat 등)에 비춰볼 때 일반 멀티플레이 게임은 적용 대상이 아닐 가능성이 높음 — 다만 채팅·팔로우·소셜피드가 게임플레이보다 두드러지는 하이브리드 서비스로 발전하면 별도 법무 검토 필요</div></li>
+            <li><div class="step-title">BOSE(기본 온라인 세이프티 기대사항) 준수 문서화</div><div class="step-meta">eSafety가 연간 서면 보고서 제출을 요청할 수 있어, 최소한의 대응 체계를 사전에 문서로 정리</div></li>
+            <li><div class="step-title">[신규] Age-Restricted Material Codes 대응 — R18+ 앱 다운로드 차단·연령확인 (2026-03-09 시행)</div><div class="step-meta">eSafety Commissioner가 제정한 온라인안전법 하위 코드로, 앱스토어는 R18+ 등급 앱의 다운로드를 차단해야 하고 R18+ 등급 게임을 서비스하는 온라인 게임 플랫폼은 연령확인 절차(연령추정·디지털ID지갑·신분증 확인 등)를 갖춰야 합니다. 자사 게임이 R18+ 등급이거나 소셜카지노형 도박 시뮬레이션 콘텐츠를 포함한다면 최우선 점검 대상입니다.</div></li>
+            <li><div class="step-title">[신규] 앱 배포 서비스 요건 2026-09-09부터 순차 적용</div><div class="step-meta">앱 배포 플랫폼 대상 일부 연령확인 요건은 유예기간을 거쳐 2026년 9월 9일부터 적용됩니다 — 자체 앱 배포·인앱 스토어를 운영한다면 이 일정에 맞춰 준비하세요.</div></li>
+            <li><div class="step-title">[신규] 미준수 시 최대 A$4,950만 벌금 리스크 인지</div><div class="step-meta">기존 CSAM 삭제명령 미이행 과태료보다 훨씬 큰 규모 — 온라인 세이프티 항목 전체를 Medium에서 High로 재평가할 것을 권장</div></li>
+          </ol>
+        </div>
+
+        <div class="callouts" style="margin-top:4px">
+          <div class="callout danger">
+            <div class="callout-icon"><span class="material-icons-outlined">report</span></div>
+            <div>
+              <h3>[Risk 높음] eSafety 게임플랫폼 투명성명령 확대 — 10개 플랫폼·23건, 2026.12 최종 준수기한</h3>
+              <p>"게임은 SNS 금지법 적용 제외"라는 사실만 보고 안심하면 놓치는 트랙이 있습니다. eSafety Commissioner는 <strong>SNS 금지법과 무관한 Online Safety Act 2021상 기존 권한(BOSE)</strong>으로 게임 플랫폼을 직접 조사하고 있습니다.</p>
+              <p>2026년 4월 21~22일 eSafety는 아동 그루밍·극단주의 방지 체계에 관해 <strong>Roblox·Minecraft·Fortnite·Steam에 법적 구속력 있는 투명성 통지(transparency notice)</strong>를 발송했습니다. 2026년 6월 중순 기준 이 집행 사이클은 <strong>10개 플랫폼·23건</strong>으로 확대됐고 5개 플랫폼이 활성조사 중입니다.</p>
+              <p><strong>최종 준수 입증 기한은 2026년 12월</strong>이며, 미이행 시 <strong>1일 최대 A$875,000</strong>, 위반 시 <strong>건당 최대 A$4,950만</strong>의 민사벌금이 부과됩니다.</p>
+              <p><strong>[사업자 관점 — 대응 범위를 정확히 좁힐 것]</strong> UGC·인게임 채팅·소셜 기능이 <strong>없는 게임은 이번 집행 대상이 아니므로 즉각 조치가 불필요</strong>합니다. 반대로 UGC·오픈채팅이 있는 타이틀이라면, 새 시스템을 만들 필요 없이 <strong>기존 신고·차단 기능을 문서화하고 그루밍·극단주의 대응 정책을 공개 게시</strong>하는 저비용 선제조치를 2026년 12월 기한 전까지 갖춰 두는 것이 합리적입니다.</p>
+            </div>
+          </div>
+          <div class="callout info">
+            <div class="callout-icon"><span class="material-icons-outlined">info</span></div>
+            <div>
+              <h3>일반적인 모바일 게임은 SNS 금지법 적용 대상 아님 — 단 위 투명성명령과는 별개 트랙</h3>
+              <p>eSafety는 "서비스의 유일하거나 주된 목적이 소셜 상호작용인지"를 기준으로 판단하며, 게임에 부수적인 채팅·친구추가 기능이 있다는 이유만으로는 해당하지 않습니다. 공식 배제 목록에 Roblox·Steam/Steam Chat·Discord가 명시돼 있고, 이 기준은 바뀌지 않았습니다.</p>
+              <p>다만 <strong>과징금은 2026년 6월 28일 A$4,950만에서 A$9,900만으로 배증</strong>됐습니다(청소년 우회 가입이 쉽다는 지적에 따른 조치). 적용 대상은 그대로지만 시행 강도는 계속 세지는 추세입니다.</p>
+              <p>별도 연령인증 시스템을 서둘러 구축할 필요는 없으나, 소셜 기능이 게임플레이보다 커지는 신규 기능 출시 전에는 검토를 권장합니다. <strong>SNS 금지법 적용 제외와 위 투명성명령은 별개 트랙</strong>이라는 점만 혼동하지 마세요.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reg-sub">
+          <h4><span class="material-icons-outlined" style="font-size:1.8rem; color:hsl(var(--primary-strong))">link</span>원문 / 레퍼런스</h4>
+          <ul class="links-list">
+            <li><a href="https://www.legislation.gov.au/C2021A00076/latest" target="_blank" rel="noopener">Online Safety Act 2021 (Cth)</a> <span class="muted">(온라인안전법 2021, 연방)</span></li>
+            <li><a href="https://www.esafety.gov.au/industry/tech-providers/basic-online-safety-expectations" target="_blank" rel="noopener">eSafety — Basic Online Safety Expectations(BOSE) 안내</a></li>
+            <li><a href="https://www.esafety.gov.au/about-us/industry-regulation/social-media-age-restrictions/which-platforms-are-age-restricted" target="_blank" rel="noopener">eSafety — 연령제한 소셜미디어 플랫폼 판단 기준 및 배제 목록</a></li>
+            <li><a href="https://www.esafety.gov.au/newsroom/media-releases/online-safety-codes-introduce-real-world-protections-for-children-online" target="_blank" rel="noopener">eSafety — Online safety codes introduce real-world protections for children online (Age-Restricted Material Codes 공식 발표, 영문 원문)</a></li>
+            <li><a href="https://www.esafety.gov.au/sites/default/files/2026-03/Age-Restricted-Material-Codes-fact-sheet-March2026.pdf" target="_blank" rel="noopener">eSafety — Age-Restricted Material Codes Fact Sheet (영문 원문 PDF)</a></li>
+            <li><a href="#restricted" target="_blank" rel="noopener">호주 규제 상세 (내부 Wiki)</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 패널티 -->
+    <section class="reveal">
+      <div class="card table-card">
+        <h2><span class="seq">04</span> 미준수 시 패널티</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>위반 항목</th>
+                <th>처벌 수준</th>
+                <th class="num">원화 환산</th>
+                <th>비고</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>등급 오분류 / 미등급 유통</td>
+                <td>유통 금지 명령 · 형사 처벌(RC 콘텐츠)</td>
+                <td class="num">—</td>
+                <td><span class="badge badge-warning">스토어 강제 삭제 리스크</span></td>
+              </tr>
+              <tr>
+                <td>ACL 위반 — 환불 거부·허위 표시 (개인 사례)</td>
+                <td>A$300만 (Valve 판례)</td>
+                <td class="num">약 27억원</td>
+                <td>ACCC v Valve Corporation</td>
+              </tr>
+              <tr>
+                <td>개인정보보호법 — 심각한 위반</td>
+                <td>A$5,000만 / 수익의 3배 / 매출 30% 중 최고액</td>
+                <td class="num">약 450억원~</td>
+                <td>2024년 개정으로 상향</td>
+              </tr>
+              <tr>
+                <td>CSAM 삭제명령 미이행 (24시간 내)</td>
+                <td>개인 A$782,500 / 법인 A$3,913,000</td>
+                <td class="num">약 7억~35억원</td>
+                <td>Online Safety Act 제109~116조</td>
+              </tr>
+              <tr>
+                <td>16세 미만 SNS 금지법 위반 (해당 시)</td>
+                <td>최대 A$9,900만 (2026.06.28 A$4,950만에서 배증)</td>
+                <td class="num">약 891억원</td>
+                <td>일반 게임은 대부분 적용 제외</td>
+              </tr>
+              <tr>
+                <td>eSafety 투명성명령(transparency notice) 미이행</td>
+                <td>1일 최대 A$875,000 · 위반 시 건당 최대 A$4,950만</td>
+                <td class="num">약 7.9억원/일 · 약 445억원</td>
+                <td><span class="badge badge-danger">Risk 높음 · 2026.12 준수기한</span></td>
+              </tr>
+              <tr>
+                <td>Age-Restricted Material Codes 위반 (R18+ 미차단·연령확인 미비)</td>
+                <td>최대 A$4,950만</td>
+                <td class="num">약 445억원</td>
+                <td>2026-03-09 시행, R18+ 등급 게임·소셜카지노형 콘텐츠 보유 시 직접 해당</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note muted">환율 기준 1 AUD ≈ 900 KRW (2026.08, 실제 환율은 변동될 수 있으므로 집행 시점 환율 재확인 권장)</p>
+      </div>
+    </section>
+
+    <!-- 05 타임라인 -->
+    <section class="reveal">
+      <div class="card">
+        <h2><span class="seq">05</span> 출시 전 준수 타임라인</h2>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-day">D-60</div><div><p class="tl-title">IARC 설문 답변 확정 + 등급 사전 산정</p><p class="tl-desc">유료 가챠·도박 시뮬레이션 콘텐츠 여부를 정확히 답변, 담당자 교차 검증</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-45</div><div><p class="tl-title">이용약관·CS 스크립트에서 "환불 불가" 문구 전면 제거</p><p class="tl-desc">ACL 소비자 보증 조항 반영, 환불 요청 대응 프로세스 수립</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-30</div><div><p class="tl-title">확률표 게시 UI 구현 + 개인정보처리방침 현지화</p><p class="tl-desc">APPs 13개 원칙 반영한 개인정보처리방침 게시</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-20</div><div><p class="tl-title">(조건부) UGC·인게임 채팅 보유 시 eSafety 투명성명령 대비 문서화</p><p class="tl-desc">신고·차단 기능 동작 방식과 그루밍·극단주의 대응 정책을 문서화해 공개 게시. 새 시스템 개발이 아니라 기존 기능의 문서화·게시로 충분하며, 2026년 12월 준수기한 전까지 갖추면 됨. UGC·채팅이 없으면 스킵</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-14</div><div><p class="tl-title">NDB 신고 프로세스, CSAM 24시간 대응 체계, R18+ 연령확인 여부 점검</p><p class="tl-desc">OAIC 신고 채널·eSafety 삭제명령 대응 담당자 지정, 자사 게임 등급이 R18+이거나 도박 시뮬레이션 콘텐츠가 있으면 Age-Restricted Material Codes 대응(연령확인 절차) 필수 확인</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-7</div><div><p class="tl-title">자동갱신 구독 취소 플로우 최종 점검</p><p class="tl-desc">다크패턴 여부 재확인, 사전 고지 문구 게시</p></div></div>
+          <div class="tl-item"><div class="tl-day">D-0</div><div><p class="tl-title">출시</p><p class="tl-desc">출시 후 ACCC·OAIC·eSafety 집행 동향 분기별 모니터링. 아동 온라인 개인정보 코드 최종본(2026.12.10 시행 예정)과 eSafety 투명성명령 준수기한(2026.12)을 캘린더에 반영</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 결론 -->
+    <section class="reveal">
+      <h2 style="padding-left:4px"><span class="seq">06</span> 한 문장 요약</h2>
+      <div class="callouts">
+        <div class="callout info">
+          <div class="callout-icon"><span class="material-icons-outlined">info</span></div>
+          <div>
+            <h3>실무자를 위한 핵심 6줄</h3>
+            <p>유료 가챠가 있으면 IARC 설문에 정직하게 답해 M15+ 이상을 받으세요. 아이템에 환금성을 붙이는 순간 IGA(인터랙티브도박법) 검토가 별도로 필요해집니다.</p>
+            <p>약관과 CS 스크립트에서 "환불 불가" 문구를 완전히 지우세요. 문구 수정만으로 대부분 해결되는 항목입니다.</p>
+            <p>개인정보처리방침을 APPs 기준으로 현지화하고, 아동 온라인 개인정보 코드가 2026년 12월 10일까지 시행 예정이므로 15세 미만 대응을 연내 준비하세요.</p>
+            <p>UGC·채팅 기능이 있으면 CSAM 24시간 대응 체계를 갖추세요.</p>
+            <p>같은 UGC·채팅 보유 타이틀은 eSafety 투명성명령 트랙도 별개로 열려 있습니다. 신고·차단 기능과 그루밍 대응 정책을 문서화해 2026년 12월 전까지 공개 게시해 두세요.</p>
+            <p>R18+ 등급이거나 도박 시뮬레이션 콘텐츠가 있으면 2026-03-09 시행 Age-Restricted Material Codes에 따른 연령확인 절차를 마련하세요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <div class="foot-row"><span class="foot-key">대상 국가</span><span>호주 (Australia)</span></div>
+      <div class="foot-row"><span class="foot-key">기준일</span><span>2026-08-27</span></div>
+      <div class="foot-row" style="grid-column:1/-1; margin-top:8px">
+        <span class="footnote" style="color:hsl(356,77%,50%);font-weight:700">* 해당 자료는 예시를 돕기 위한 샘플 페이지입니다.</span>
+        <span class="footnote">* 본 문서는 공개된 법령·공식 발표·언론 보도를 기반으로 작성된 실무 참고용 요약이며, 법률 자문을 대체하지 않습니다. 실제 서비스 전 유관부서에 자문을 통해 최종 적용을 권장합니다.</span>
+      </div>
+    </footer>
+
+  </div></div>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var items = document.querySelectorAll('.reveal');
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function(el){ el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){
+            var el = e.target;
+            var idx = Array.prototype.indexOf.call(items, el);
+            el.style.transitionDelay = Math.min(idx, 6) * 70 + 'ms';
+            el.classList.add('in');
+            io.unobserve(el);
+          }
+        });
+      }, { threshold:0, rootMargin:'0px 0px -10% 0px' });
+      items.forEach(function(el){ io.observe(el); });
+    })();
+  </script>
+
+<style>
+.sample-popup-overlay{position:fixed;inset:0;background:rgba(20,20,25,.45);display:none;align-items:center;justify-content:center;z-index:2000;padding:2rem}
+.sample-popup-overlay.show{display:flex}
+.sample-popup{background:#fff;border-radius:18px;box-shadow:0 14px 40px rgba(16,24,40,.18);padding:3.2rem 3.2rem 2.6rem;max-width:420px;width:100%;text-align:center;font-family:'Pretendard',-apple-system,system-ui,sans-serif}
+.sample-popup-icon{font-size:3.6rem;color:hsl(356,77%,50%);margin-bottom:1.0rem}
+.sample-popup-title{font-size:1.8rem;font-weight:700;color:hsl(240,10%,11%);margin-bottom:.8rem}
+.sample-popup-body{font-size:1.45rem;color:hsl(240,5%,38%);line-height:1.6;margin-bottom:2.0rem;word-break:keep-all}
+.sample-popup-close{background:hsl(18,100%,57%);color:#fff;border:none;border-radius:8px;font-size:1.4rem;font-weight:700;padding:.9rem 2.4rem;cursor:pointer;font-family:inherit}
+.sample-popup-close:hover{background:hsl(17,87%,43%)}
+a[href^="#restricted"]{cursor:not-allowed}
+</style>
+<script>
+/* 사내망 전용 자료 링크 — 주소를 노출하지 않고 클릭 시 안내 팝업으로 대체 */
+(function(){
+  function popup(){
+    var o = document.getElementById('samplePopupOverlay');
+    if(!o){
+      o = document.createElement('div');
+      o.id = 'samplePopupOverlay';
+      o.className = 'sample-popup-overlay';
+      o.innerHTML = '<div class="sample-popup" role="dialog" aria-modal="true">'
+        + '<div class="sample-popup-icon material-icons-outlined">lock</div>'
+        + '<div class="sample-popup-title">제한된 접근입니다</div>'
+        + '<div class="sample-popup-body">내부 자료 링크로, 샘플 페이지에서는 열람할 수 없습니다.</div>'
+        + '<button class="sample-popup-close">확인</button></div>';
+      o.addEventListener('click', function(e){
+        if(e.target === o || e.target.classList.contains('sample-popup-close')) o.classList.remove('show');
+      });
+      document.body.appendChild(o);
+    }
+    o.classList.add('show');
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(!a) return;
+    if(/^#restricted/i.test(a.getAttribute('href')||'')){
+      e.preventDefault(); e.stopPropagation(); popup();
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>
